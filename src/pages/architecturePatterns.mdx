@@ -1,0 +1,69 @@
+## Introduction
+Different layers of Web Application are:
+- Front end / UI also called are **Representation Layer**.
+- Backend also called **Business Layer**.
+- Data Storage also called **Persistence Layer**.
+Architecture is basically internal design details for building the apps. So there are some well known architecrure available to use like **Monolithic Architecture**
+
+## Monolithic Architecture Pattern
+Mono = Single
+We saw that in a WebApp there are 3 layers as mentioned above. So in case of Monolithic architecture, these three layers share the same codebase and written together and these should also be deployed together. And generally written in same language or technology. Ex: Facebook, google, LinkedIn etc used this method initially. So three layers are present on a single machine in a single code base. Similar to single or mono repository.
+![2.1.png](/assets/2.1.png) 
+- Monolithic systems are comparatively easy to secure as everything is at a single place.
+### When to use Monolithic Architecture (Advantages)
+- When you are just starting the project and project is small and you have limited resources, then monolithic system or architecture makes more sense. And faster development is needed.
+- Other scenarios of using monolithic architecture is when doing some POC(Proof of Concept) so that time, we do not build the real market product so prefer Monolithic architecture.
+- Other use case is where we want very low latency or latency sensitive system. Because there would be less n/w calls and hence this systems outperforms.
+
+### When not to use Monolithic Architecture (Disadvantages)
+- All code is at one place so after a period of time, it becomes very difficult to maintain and understand.
+- Monolithic has a very tight coupling so there is very much efforts needed to introduce new requirement or change existing feature.
+- One layer changes impacts all the layers to be re-deployed. Ex: If there is a single change only in frontend, then also backend and datastore has to be re-deployed, which is very time consuming and not cost effective.
+- It is very less scalable and less re-usability. If the traffic is coming at frontend only then also to scale front-end, every thing needs to be scaled which is very expensive after a point of time.
+
+Then what is other architecture? It is Distributed Systems.
+
+## Distributed System
+- **Data Driven Decision is important.** Every decision we take should be taken after considering our target audience, i.e. data. Data is the new oil. 
+- With data we generally do storage and computation. If the data is small, we can do storage and computation on the same system, but if the data is huge, we cannot store and compute in a single system and that is where we use multiple system connected together via some network and distributed systems comes into play.
+
+**Important to note**
+When we talk about distributed system, it should build on mainly two principal, so we should:
+- Always make sure that the use of commodity hardware is cheap and in interchangeable.
+- Have a proper network interaction, so network place a very important role in distributed system.
+![2.2.png](/assets/2.2.png) 
+
+### Distributed Systems and it Principles
+Distributed systems are designed such that end users should see it as the one system and all the complexity of the system should be hidden from the user.
+![2.3.png](/assets/2.3.png) 
+
+#### Distributed Storage
+Here User get the total space of 1600GB but behind the scene in a distributed system it is possible that it is divided in small segments like 4 blocks of 400GB each as shown.
+![2.4.png](/assets/2.4.png) 
+
+#### Distributed Computation
+Suppose there is a e-commerce company with huge sellers and this company settle payment with its merchant every two week, so file is divided into different chunks handled by different system in a distributed system as shown below.
+![2.5.png](/assets/2.5.png) 
+
+
+### Evolution of Distributed system
+Initially with basic structure of distributed system, there were always a lot of failures in the system and because of which all the data got lost sometime so there was a scope of improvement. So most of the companies started using monolithic architecture again (out of which Oracle was the main beneficiary with monolithic), except Google. Google still hoped to improve the distributed system and continued to work on it.
+
+Some reason of failures of distributed systems were:
+- Commodity failure of hardware: Hardware was cheap, so it was not that good and failed many time because of its quality.
+- Network: network was not very reliable, for example, if one system gets disconnected, its data cannot be served to the user, which ultimately resulted in the data loss.
+
+So Google thought of making a distributed system which was tolerant to the failure, so basically Google thought if we can make a system that is tolerant to the failures, then most of the issues related to distributed system would be resolved, so it brought up the concept of **redundancy and replication**, which means that storing same data in more than one system, so good replication means less chances of data loss.
+![2.6.png](/assets/2.6.png) 
+
+Now, when dealing with data, there were majorly two problems
+1. Storage 
+2. Computation
+
+So to solve both of the problem, Google used **replication**.
+- To solve the storage issue. Google came up with **GFS that is Google file system**, which was a distributed system that helped to perform the replication of the data 
+- To solve the computation issue distributed computation was brought up also called as **map reduce**, so it was a way of breaking bigger problem into a small problem so that it can run on multiple machines.
+**GFS and MapReduce later on, became the source of Hadoop that is the concept of big data**
+
+Now let us see some characteristics of an application like latency, throughput, availability, fault tolerance, consistency etc.
+
