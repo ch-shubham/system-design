@@ -1,3 +1,5 @@
+import { Callout } from 'nextra/components';
+ 
 # Application Characteristics
 There are many characteristics of an application, like Latency, Throughput, Availability, Fault Tolerance, Consistency, etc. Let us look at all these in detail.
 
@@ -64,10 +66,25 @@ And since we know that messaging is a two-way communication and the above calcul
 
 ![img](/assets/3.6.png)
 
-> [!Tip] For storage devices, manufacturers use GB (decimal) to make the size look larger, but operating systems use GiB (binary) for calculation, which is why your “500 GB” hard drive shows as ~465 GiB. So calculation of Byte to GB 
-> $$ 1 \text{ GB} = 10^9 \text{ Bytes}$$
-> $$ 200 \, \text{billion bytes} = \frac{200 \times 10^9}{1 \times 10^9} =200 \, \text{GB}$$
-> $$4.6 \, \text{MB/sec} \times 8 \, \text{bits/byte} = 36.8 \, \text{Mbps}.$$  
+<Callout>
+For storage devices, manufacturers use GB (decimal) to make the size look larger, but operating systems use GiB (binary) for calculation, which is why your “500 GB” hard drive shows as ~465 GiB. So calculation of Byte to GB 
+
+<div style={{ textAlign: "center", color: "#1971c2" }}>
+$$ 1 \text{ GB} = 10^9 \text{ Bytes}$$
+<br></br>
+</div>
+
+<div style={{ textAlign: "center", color: "#1971c2" }}>
+$$ 200 \, \text{billion bytes} = \frac{200 \times 10^9}{1 \times 10^9} =200 \, \text{GB}$$
+<br></br>
+</div>
+
+<div style={{ textAlign: "center", color: "#1971c2" }}>
+$$4.6 \, \text{MB/sec} \times 8 \, \text{bits/byte} = 36.8 \, \text{Mbps}.$$  
+<br></br>
+</div>
+
+</Callout>
 
 Let us understand how the above calculation can help us design our system:
 - **Network Bandwidth:** So the above calculation gives us the idea that we would require 36.8 Mbps of network bandwidth for the data transfer. We can add 10 to 20% of extra buffer on top of it, so it comes out to be **~50 Mbps**.
