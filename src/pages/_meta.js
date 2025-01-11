@@ -6,5 +6,6 @@ export default {
   },
   // topics below
   introduction: 'Introduction',
-  architecturePatterns: 'Architecture Patterns'
+  architecturePatterns: 'Architecture Patterns',
+  applicationCharacteristics: 'Application Characteristics'
 }

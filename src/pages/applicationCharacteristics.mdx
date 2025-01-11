@@ -1,0 +1,150 @@
+# Application Characteristics
+There are many characteristics of an application, like Latency, Throughput, Availability, Fault Tolerance, Consistency, etc. Let us look at all these in detail.
+
+## Latency
+Latency basically means the round trip time (RTT) and it comprises network delay and computational delay. Distance is one of the main causes of latency.
+![img](/assets/3.1.png)
+So in the above diagram, the network latency and the computational delay give the total latency which equals (T1 + T2 + T3).
+
+One solution to improve latency is using a **CDN** (Content Delivery Network) or by **caching**. By creating CDN servers (or buffer or cache servers) all over the world which are connected to the parent hosting server, these servers carry static files of the website as cached data. Depending upon the location of the client, the nearest located CDN server fulfills the request of the client, hence improving the latency of a system.
+
+### Impact of Architecture Patterns on Latency
+If we compare a monolithic system and a distributed system to check the latency, we find that in a monolithic system for computation, there are only method-to-method calls as only one system is involved. But in the case of distributed systems, there are multiple machines involved for computation, so the total computation time involves the computation of that individual machine plus the network call to another machine for computation. So the total time in the case of a distributed system becomes very high compared to a monolithic system.
+**Latency in monolithic systems is much better than in distributed systems**
+![img](/assets/3.2.png)
+
+- It is very important to keep the latency factor in mind while designing an app as it affects the user experience.
+- Factors on which the latency depends are:
+	1. Network Delays
+	2. Computational Delays
+
+### How to improve latency?
+- Improve network bandwidth.
+- Improve computational delay by concurrent or parallel processing.
+- Use CDN i.e. content delivery network.
+
+Let us see an example to improve latency. Walmart.com initially used the private cloud. Later on, they switched to a public cloud like AWS or Azure, so it resulted in high latency at the start because network delays were added. Now to improve this, they leveraged cloud-native services like Kubernetes to do parallel or concurrent processing to reduce the computational time and hence decrease the latency.
+![img](/assets/3.3.png)
+
+## Throughput
+In simple words, it is the rate of doing things. Processing maximum requests at a given time is throughput **(req/unit)**.
+**Throughput** refers to the rate at which a system processes requests or completes tasks within a specific unit of time. Ex: The **throughput** of the toll system is the number of vehicles passing through the toll booths in a unit of time (e.g., cars per minute). Similarly, in computing or networking, throughput measures how many requests or tasks a system can handle per unit of time.
+
+Suppose our application is running on a machine. So the machine is somewhere limited by resources like RAM, meaning they have an upper limit to the number of requests or processes they can serve at a time, so that **upper limit is called throughput**.
+![img](/assets/3.4.png)
+
+**Important Points**
+- Higher the throughput, the better it is.
+- `Throughput = transaction/sec`.
+- **Low latency leads to higher throughput.**
+
+### Throughput and Architecture
+Monolithic systems are limited in terms of resources or threads, so they have fixed or limited throughput, but in the case of distributed systems, there is no limitation on resources as we can increase the number of systems, so higher throughput.
+
+![img](/assets/3.5.png)
+
+### Improving Throughput
+**Why knowing or analyzing throughput is important?**
+- While designing an application, we design it for at least the next year, so we must know the numbers so that our app does not face any scalability issues.
+
+**How to improve throughput?**
+- Improving the machine resources
+- Improve performance, like using caching or CDN
+- Proper monitoring can help to improve throughput
+- Distributed computations using load balancers
+
+#### Let us see a case study with an example for throughput:
+Suppose we are building a Facebook messenger or any messaging system, so we need to have some higher level of estimation around the throughput so that we can build a system to be more scalable in the future.
+
+Let us say we have active users to be 50 million and every user sends 40 messages per day, so the total messages that can be sent is 2 billion messages per day approximately. So we need to design wisely so that 2 billion messages per day can be handled.
+
+**In Terms of Storage**:
+Let us say the size of each message is 100 bytes. So on calculation, we find that the total storage that can be used in a day is approximately 200 GB per day. So if we see how much storage would be used every second, it will come out to be 2.3 MB per second.
+And since we know that messaging is a two-way communication and the above calculation holds for one user only, so for two users, it would be approximately 4.6 MB per second. So the total throughput comes out to be 4.6 MB per second. Based on this throughput value, it will help us to build a good infrastructure.
+
+![img](/assets/3.6.png)
+
+> [!Tip] For storage devices, manufacturers use GB (decimal) to make the size look larger, but operating systems use GiB (binary) for calculation, which is why your “500 GB” hard drive shows as ~465 GiB. So calculation of Byte to GB 
+> $$ 1 \text{ GB} = 10^9 \text{ Bytes}$$
+> $$ 200 \, \text{billion bytes} = \frac{200 \times 10^9}{1 \times 10^9} =200 \, \text{GB}$$
+> $$4.6 \, \text{MB/sec} \times 8 \, \text{bits/byte} = 36.8 \, \text{Mbps}.$$  
+
+Let us understand how the above calculation can help us design our system:
+- **Network Bandwidth:** So the above calculation gives us the idea that we would require 36.8 Mbps of network bandwidth for the data transfer. We can add 10 to 20% of extra buffer on top of it, so it comes out to be **~50 Mbps**.
+- **Storage System:** Choose a storage system that can handle volume up to 200 GB with room for storing backups and historical data. Keep in mind if this data is accessed very frequently, we can use SSD solutions. 
+- **Infrastructure:** 
+	- For network bandwidth, ensure it is sufficient for a calculated throughput. We can use 1Gbps ethernet for sufficient bandwidth with headroom for growth in the future and use load balancers if multiple servers are involved.
+	- For storage, we can decide if it is used frequently. We can use block storage like AWS EBS or SSD and if the data is infrequently accessed, we can use object storage like Amazon S3 or Google Cloud Storage. For Sharding, we can use solutions like AWS DynamoDB if the data exceeds one server's capacity.
+	- Costs: 
+		- Network Costs: Ensure your chosen infrastructure supports the required bandwidth without incurring excessive costs. 
+		- Storage Costs: Evaluate the cost of storing 200 GB/day and account for historical data storage.
+		- Compute Costs: Choose appropriately sized instances for your workload, balancing cost and performance.
+- **Testing the system:**  Use tools like JMeter to verify the infrastructure can handle the throughput (5Mbps) and observe the network utilization, latency, server response times, etc.
+
+## Availability
+It means how much a system is available. For example, if something is available most of the time it's highly available, and if it's not then it's low available. A highly available system means any time the server gets a request, the server should respond back with some result, so high availability is important.
+
+For example, if there is a social media app like Facebook or Instagram, they are available all the time. So these apps are of high availability. Systems like Zerodha, IRCTC, Upstox, at night time we are not allowed to do anything i.e. the systems are not available or not reachable during the night time. So these apps have low availability.
+
+### Availability and Architecture
+![img](/assets/3.7.png)
+
+## Fault Tolerance Or Partition Tolerance
+Fault tolerance is also called Partition tolerance.
+In the case of distributed systems, we have the concept of fault tolerance that is related to availability.
+It means whenever we build a distributed system, one thing to expect is failures will happen. That is a very normal thing, so we should take care of failure itself during the development.
+So, fault tolerance says that: if failure happens, the system should handle it gracefully or carefully. It should not be like if one system is down then the complete app is down. So if one fails, another system should come forward and execute. And to achieve tolerance, we use **redundancy and replication.** 
+If our system design is highly fault tolerant, then our system becomes highly available automatically because if one system is down, another system handles making the system or app available, even if any issue is there in one of the systems.
+
+There are a few ways by which we can improve availability, for example:
+- Make the system fault tolerant (using redundancy or replication).
+- Reduce downtime.
+- Proper monitoring and alerting of the system should be there.
+
+**Case Study to build a high availability system**
+Let's say we want to build a Zomato, Swiggy, or any food delivery app. Let's explore it.
+So is high availability required is the first question. The first answer might be no, not very much needed because if a new restaurant signs up with Zomato, it has to be refreshed at all the users' apps and for that app has to be reloaded so it needs some time. Therefore low availability. 
+But this is **not a good design** because every time Zomato is down, no order means loss to Zomato, so it's okay for some users to not get instant new restaurants as others are still available. **So high availability is needed. We cannot afford downtime.**
+
+## Consistency
+An application is called consistent if every client/customer gets the same answer/response for the same request/question. For example, if there is an e-commerce website like amazon.com, then the price should reflect to all the users exactly the same for the particular product. If the price changes to something, then the price should be visible to each and every user. It should not be like one user gets to see some XYZ price and the other user sees some ABC price, so the price should be consistent. If everyone sees the same price, then that means the system is consistent.
+So basically, if anything changes on one system, it should be reflected to all the other replicas or all the other systems in a distributed system. If it happens, then it is called a consistent system.
+![img](/assets/3.8.png)
+Let's explore the above real-life example in detail:
+*Suppose there is a person Ramesh, who is studying different subjects on different days and different people come to meet him on different days. Let's say Ramesh is studying system design on day zero, maths on day one, chemistry on day three, and digital circuit on day four so let's say P, Q, R, and S are four different people that come to meet him on different days. So P, Q, R, and S will have the information based on the days they visited Ramesh. So if I ask person P, what Ramesh is studying, the person might say that Ramesh is studying system design. If I ask the same question to Q, the person might say he is studying maths, same to R would say chemistry and S would say digital circuit. So here I am asking the same question to all the different people, and I am getting different results. That means they are not aware of the latest information. So here the system is called an inconsistent system.
+Now to make it consistent, all four people should share the info with each other whosoever has the latest information tells the other. Also, for example, if Q visited on day one, Q person must inform P person as well about the update that Ramesh is studying Maths. Similarly, when S visits on day four, S person should inform and update P, Q, and R persons as well. **In this way, we can make the system consistent.***
+
+**For distributed systems**
+![img](/assets/3.9.png)
+The same thing would be applied to a distributed system. Suppose we have a system that is connected over a network, so if there are five systems and I update one of the systems with the information, `d1'` from `d1`, then there might be other systems that take some time (say $\Delta t_1$ and $\Delta t_2$) to replicate and update themselves from `d1` to `d1'`, so the **old information is called stale information or dirty read** because that is the old data and not the new latest data. So if a request gets to the system that has stale information or dirty read, then it might result in wrong information or the old data so this is called an inconsistent system state. Now to make the system consistent, we need to check what is the maximum of $\Delta t_1$ and $\Delta t_2$ that other systems are taking to update themselves with the latest information. Till that time we will block the read access so that if there would be no access, then there would be no stale information passed to the user. **So now our system becomes consistent**.
+
+### Consistency and Architecture
+ In distributed systems, the consistency has to be maintained by the developer, but monolithic systems are naturally consistent and hence the consistency or replication concept comes into play when we have distributed systems only.
+![img](/assets/3.10.png)
+
+### Factors impacting consistency
+Consistency depends on how fast we are able to update the replica of other systems, for example, $\Delta t_1$ and $\Delta t_2$ above. The lower the number, the better it is. So to make the system consistent, make sure all the replicas are in sync.
+Consistency also depends on the fact that are we in the position to stop the read for some time to make the system consistent? For example, in Facebook messenger, we cannot afford to make it down so we need to compromise on consistency, but for IRCTC, we can like every night IRCTC is down.
+
+### Factors improving consistency
+- We need to stop the read while all the replicas are getting updated.
+- By improving the network bandwidth, we decrease $\Delta t_1$ or $\Delta t_2$.
+- Replicas should be chosen based on distance strategy. Choose the server in the data center at the same location or having very less distance. It will help to improve the network delay i.e. it will help to decrease $\Delta t_1$ or $\Delta t_2$.
+
+### Types of Consistency
+There are basically two types of consistency.
+- Strong Consistency
+- Eventual Consistency
+
+#### Strong Consistency
+Here we block the access to the replica till it is updated.
+![img](/assets/3.11.png)
+
+#### Eventual Consistency
+Here we don't block the access. Instead, we provide stale information to some users. If any request hits the replica that has old data. It is used where we can manage to provide stale data for some time. For example, every social media app works on eventual consistency generally.
+![img](/assets/3.12.png)
+
+**Example to understand IRCTC use case**
+![img](/assets/3.13.png)
+
+Let us now understand a bit about CAP theorem.
