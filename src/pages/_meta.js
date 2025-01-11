@@ -7,5 +7,6 @@ export default {
   // topics below
   introduction: 'Introduction',
   architecturePatterns: 'Architecture Patterns',
-  applicationCharacteristics: 'Application Characteristics'
+  applicationCharacteristics: 'Application Characteristics',
+  capTheorem: 'CAP Theorem'
 }

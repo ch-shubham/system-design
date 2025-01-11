@@ -1,0 +1,36 @@
+# CAP Theorem
+**C = Consistency**
+**A = Availability**
+**P = Partition Tolerance (Fault tolerance)**
+
+**Partition Tolerance** : It means if one or many system are network partitioned and can't communicate with each other (Network is very unreliable) in a distributed system. Then also our whole system should handle it gracefully and our complete distributed system should not go down so always keep partition tolerance in mind while designing.
+![img](/assets/4.1.png)
+
+## CAP Theorem definition
+**Among CAP i.e consistency, availability and partition tolerance, we can achieve only two things at a time in a distributed system.**
+- CA can be achieved by ignoring P. If we do not do replication, all data will be in one system making system consistent. Also, we are not blocking read access, so it would be highly available, but if one system goes down, all the data can be lost i.e partition tolerance is not there to handle any kind of fault in the system.
+- AP can be achieved by ignoring C i.e Consistency.
+- CB can be achieved by ignoring A i.e availability.
+![img](/assets/4.2.png)
+
+![img](/assets/4.3.png)
+
+## Practical Aspects of CAP theorem:
+P part of that is partition tolerance is very very important and we can never ignore. Ignore that part in real life application designs..
+So we have to choose from CP or AP in majority real life scenarios, so we have to always choose between availability and consistency to design an application depending on the requirement.
+We cannot choose all three together that is been proved by the cap theorem
+If consistency increases availability decreases, and if availability increases, then the consistency decreases.
+![img](/assets/4.4.png)
+
+## Understanding CAP with use cases
+Partition Tolerance must be there and option is between consistency and availability.
+**Industrial Use Cases** (Choosing between A and C)
+- E-commerce websites like Amazon and Flipkart - **A** is more important than C
+- Food delivery app like Zomato and Swiggy - **A** is more important than C
+- Banks - C is more important than **A**
+- Booking apps, like BookMyShow IRCTC - **C** is more important than A
+- Tesla related car - **C** is more important than A
+- Messenger or social media - **A** is more important than C
+
+
+Let us now see some concept of time in distributed systems.
