@@ -1,0 +1,45 @@
+# Time in Distributed Systems
+## Concept of Time in Distributed Systems
+The idea of time comes from the **order of occurrence of the events** in environment. At what time the event comes and what is the order of their execution or occurrence is the main reason to understand the times concept in distributed system.
+
+Distributed Systems -> Spatially distributed machines -> Communicates by sharing information
+
+For example, if there are two machines at different locations, then events can happen to those machines at different times, but since they are located at different locations, so they would have the different time zones.
+![img](/assets/5.1.png)
+Here `t1` and `t2` can be in different time zones. Now suppose I have requirement where it is very important to know which even happened first and which event happened later from events `e1` and `e2`.
+Now imagine, We calculate the time `t1` and `t2` using a physical clock which has some amount of errors. We cannot guarantee that $t1 > t2$ or $t2 > t1$ if the difference is very small. We cannot calculate accurately and very precisely, so it becomes very difficult to decide which event happened earlier, and which event happened later. 
+So there are few problems in using physical clock in case of distributed systems:
+- No concept of global physical time is there.
+- Accurate and precise time identification is very difficult because of different time zones.
+- Network delay can change original ordering of event, causing errors.
+So we need to give up with a physical time clock and work with logical time to overcome the above issues.
+And this is where the concept of time comes in in case of distributor systems, let's see further.
+
+## Logical Time and Lamport Algorithm (Clock)
+So there are many issues with physical time as discussed earlier.
+So in logical time, we do not depend upon physical time. Instead, we use some sort of counters or identifiers that help us to decide which event occurred first and which event occurred later.
+
+There are two kinds of logical times, **logical local time**, and **logical global time**.
+
+**Logical Local Time**: Here process mark its own event and protocol to update after each local event. Ex: **Lamport Clocks:** Each process maintains a scalar clock.
+
+To measure **Logical Global time** we have:
+- Local information about global time.
+- Protocol to update when the process exchange data.
+- Ex: **Consensus Algorithms:** Protocols like Paxos or Raft can enforce a global ordering of events.
+
+## Lamport Algorithm
+Lamport Clock was founded by Lezlie Lamport in 1978, and it was used to provide partial ordering of event. It was also used to provide numerical measure of “happens-before” $(\rightarrow)$ relationship.
+
+**Algorithm**: 
+- Each process uses a local counter, `initial value = 0`
+- Process increments the counter, whenever an event (send or receive) happens.
+- Counter is assigned as the TimeStamp to each event
+- Send event carries its own counter/timestamp.
+- Receive event happens, then counter/timestamp will be `Math.max(localClock, receivedMessageTimeStamp) + 1`
+
+![img](/assets/5.2.png)
+
+![img](/assets/5.3.png)
+
+That's all about concept of time and Lamport Algorithm. Let us explore about Scaling Technique now.  

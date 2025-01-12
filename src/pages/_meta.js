@@ -8,5 +8,6 @@ export default {
   introduction: 'Introduction',
   architecturePatterns: 'Architecture Patterns',
   applicationCharacteristics: 'Application Characteristics',
-  capTheorem: 'CAP Theorem'
+  capTheorem: 'CAP Theorem',
+  conceptOfTime: 'Concept of Time in Distributed Systems'
 }
