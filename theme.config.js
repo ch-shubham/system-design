@@ -29,5 +29,6 @@ export default {
   banner:{
     dismissible: false,
     content: "This is under development. This will be made open source soon. Stay tuned! 🚀",
-  }
+  },
+  // gitTimestamp: false //  uncomment to disable LastUpdated timestamp
 }
