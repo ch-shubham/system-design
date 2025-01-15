@@ -10,5 +10,6 @@ export default {
   applicationCharacteristics: 'Application Characteristics',
   capTheorem: 'CAP Theorem',
   conceptOfTime: 'Concept of Time in Distributed Systems',
-  scalingTechniques: 'Scaling Techniques'
+  scalingTechniques: 'Scaling Techniques',
+  redundancyAndReplication: 'Redundancy and Replication'
 }

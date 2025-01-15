@@ -1,0 +1,21 @@
+# Redundancy and Replication
+Redundancy and Replication is used to implement Fault/Partition Tolerance so that we can gracefully handle system failure.
+
+## Redundancy
+Redundancy means having duplicate copies of something/data. So redundancy is basically, having the duplicate copy of nodes/machines/components so that if of of the node fails, other nodes are available to respond to users/clients requests. This handling is called failure recovery or failover management.
+**There are generally two types of Redundancy**:
+- **Active Redundancy:** We have multiple similar nodes and each will get traffic(i.e. all nodes are active) and will respond. And traffic among these nodes are distributed by load balancers.
+- **Passive Redundancy:** In this few nodes are active and few are passive. When active node fails, then passive node comes in and becomes active.
+![img](/assets/7.1.png)
+
+## Replication
+It is also about duplication, but it is different from redundancy. In replication, we talk about replicating or duplication or copying of data on multiple machine (i.e databases generally).
+**There are 2 types of Replication**
+- **Active Replication:** Here, every node of cluster share every data with each other
+- **Passive replication:** Here, there is one master machine and all other are slave machines and every read or write user does, happens to master machine and slave machine does backup of the data and when master goes down, one of the slave becomes master.
+![img](/assets/7.2.png)
+
+## Redundancy Vs Replication
+![img](/assets/7.3.png)
+
+Let us now see about Load Balancers.
