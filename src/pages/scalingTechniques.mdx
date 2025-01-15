@@ -1,0 +1,36 @@
+# Scaling Technique
+## Scalability
+It's a measurement of how our system behaves when it scales up. If the response time or the load balancing of the system remains same, even if the requests increases too much, the system is said to be scalable. If the server or system takes more response time when users or load increases, the system is not scalable.
+
+During *Tatkal* of IRCTC site, the performance decreases, so we can say IRCTC site is not very much scalable, so those sites whose server is down on load increment are generally low or not scalable sites.
+## Monolithic Systems - Vertical Scaling
+Vertical scaling is a technique of increasing hardware or configuration of system. For example, initially system is of 500 GB and load or user gets increased. So we increase the storage by extra 500 GB totalling into 1000 GB, it is called as vertical scaling. 
+Increasing specification or configuration of same system, is vertical scaling. But there is a limit to vertical scaling depending on capacity of that machine.
+![img](/assets/6.1.png)
+
+### Limitation to Vertical Scaling
+- It can lead to SPOF (single point of failure) and all the resources that was added can be wasted.
+- Vertical Scaling after a point become very expensive. Performance don't improve after certain point of scaling and adding resources to system becomes expensive and can lead to loss of company.
+
+![img](/assets/6.2.png)
+
+## Monolithic Systems - Horizontal Scaling
+When load increases for a system to an extent, such that the single machine cannot handle all the request properly, we take a route/help of extra systems/machines to handle the upcoming requests. This is called horizontal scale i.e adding more machines/systems.
+Here we do not add the hardware to same machine, instead, we add the machines.
+![img](/assets/6.3.png)
+
+**2 Salient features of Horizontal Scaling**:
+- The machines in cluster is connected over network.
+- The extra machines are not very expensive and called as **commodity hardwares** which are usually very cheap.
+
+There is majorly 2 work of the system. Computation and Storage. So we can easily do horizontal scaling.
+
+**Question:** We know monolithic has only one system(machine) included so we can apply horizontal scaling to monolithic systems? As we are increasing the number of machine so the answer is YES.
+So the request can hit to any available machine and after the horizontal scaling of the system. It behaves like a distributed system.
+
+### Limitation and Challenges of horizontal scaling in Monolithic Systems
+- The first challenge is maintaining consistency and data replication.
+- Second challenge is no selective scaling. That is, for example, we want to scale only backend and not front-end and data layer. Then also since it is a monolithic system and all three layers are tightly coupled we have to scale front-end and data layer unnecessarily and that is totally waste.
+- Both vertical and horizontal scaling is possible with monolithic systems.
+
+Let us now see replication and redundancy.

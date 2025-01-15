@@ -30,5 +30,5 @@ export default {
     dismissible: false,
     content: "This is under development. This will be made open source soon. Stay tuned! 🚀",
   },
-  // gitTimestamp: false //  uncomment to disable LastUpdated timestamp
+  gitTimestamp: false //  uncomment to disable LastUpdated timestamp
 }

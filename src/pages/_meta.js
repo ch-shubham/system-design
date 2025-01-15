@@ -9,5 +9,6 @@ export default {
   architecturePatterns: 'Architecture Patterns',
   applicationCharacteristics: 'Application Characteristics',
   capTheorem: 'CAP Theorem',
-  conceptOfTime: 'Concept of Time in Distributed Systems'
+  conceptOfTime: 'Concept of Time in Distributed Systems',
+  scalingTechniques: 'Scaling Techniques'
 }
