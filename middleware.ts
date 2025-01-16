@@ -1,18 +1,18 @@
 import { NextResponse } from 'next/server';
+import type { NextRequest } from 'next/server';
 
 const USERNAME = 'admin';
 const PASSWORD = 'admin22';
 
-export function middleware(req) {
+export function middleware(req: NextRequest) {
   const authHeader = req.headers.get('authorization');
 
-  // Check if the Authorization header exists
   if (authHeader) {
-    const [scheme, credentials] = authHeader.split(' ');
+    const [scheme, encoded] = authHeader.split(' ');
 
     if (scheme === 'Basic') {
-      const decodedCredentials = atob(credentials);
-      const [user, pass] = decodedCredentials.split(':');
+      const decoded = atob(encoded);
+      const [user, pass] = decoded.split(':');
 
       // Validate username and password
       if (user === USERNAME && pass === PASSWORD) {
@@ -21,7 +21,7 @@ export function middleware(req) {
     }
   }
 
-  // If authentication fails, return a 401 response with a prompt
+  // If authentication fails, return 401 Unauthorized
   return new NextResponse('Authentication Required', {
     status: 401,
     headers: {
@@ -30,7 +30,7 @@ export function middleware(req) {
   });
 }
 
-// Match all paths
+// Apply middleware to all routes
 export const config = {
   matcher: '/:path*',
 };
