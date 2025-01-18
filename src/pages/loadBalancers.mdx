@@ -1,0 +1,60 @@
+# Load Balancers
+For simplicity, we can relate a load balancer to a manager in a company.
+
+## What does load balancer do?
+- Each server is equally loaded
+- Health checks like availability of servers
+- High scalability, availability, throughput and horizontal scaling
+
+Load balancer can be placed just in front of frontend server, backend servers, or database servers i.e anywhere needed. So wherever our servers are running on multiple instances/servers, we can always place a load balancer in front of them.
+
+![img](/assets/8.1.png)
+
+## When to use Load Balancers
+- In a situation, when we have multiple application instances or servers, it's very important to use load balancer.
+- Whenever we need scalability and add more nodes, we can easily do that with load balancers.
+- We should avoid using load balancer when we have monolithic system as in a single machine system there is no point of using load balancers.
+
+## Benefits of load balancer
+- Better customer experience as it leads to high availability, high scalability, and faster response time.
+- With load balancers, user or client have only one point of contact.
+- It Minimise the downtime.
+- Load balancers are used for request filtering and send or forward request to concerned servers.
+- A single server is not overloaded
+
+## Load Balancing Algorithms
+So let us explore how load balancing are able to balance the load. Similar to a manager in a company where manager checks availability of employee and based on skills and other logic distributes the project and work so load balance also works similarly.
+Load balancer does the following things generally:
+- Health check
+- Algorithm to decide, which server to select for particular request.
+
+### Round Robin Method
+Similar to operating system, load balancing works in this method, i.e. choose one server after the other. It works when all servers are of equal capacity.
+
+### Weighted Round Robin Method
+Similar to round robin, but applied when servers are of different capacities. For example, servers with more capacity, get more request by load balancer.
+
+### IP Hash Algorithms: 
+It is used when servers are of almost same capacity. Load balancer does unbiased or random distribution of traffic. 
+**So we have a hash function that returns a random number between (0, n-1)  {where N is equals to number of nodes/machines in a system} and send request to that number machine.**
+
+![img](/assets/8.2.png)
+
+### Least Connection Algorithm
+Used when we need to decide, based on availability of open connection to a server.
+![img](/assets/8.3.png)
+
+### Lease Response Time
+Used when client wants least response time.
+![img](/assets/8.4.png)
+
+## Challenges of Load Balancers
+Sometime load balancer can act as a single point of failure(SPOF) because user knows only load balancer, and if load balancer is down, the user will not be able to send the request, even though other instance are working fine.
+So, SPOF is an anti pattern therefore we must avoid it and we can avoid it using redundancy. We can use passive redundancy.
+So, with the redundancy at load balancer level, we can avoid SPOF.
+![img](/assets/8.5.png)
+
+![img](/assets/8.6.png)
+So with second design, if one load balancer is down (active is down) then other load balancer(passive one) can handle request, and then the load balancer can be recovered and then work as passive and so on, so we avoided single point of failure.
+
+Let us now learn about caching.

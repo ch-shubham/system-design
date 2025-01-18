@@ -11,5 +11,6 @@ export default {
   capTheorem: 'CAP Theorem',
   conceptOfTime: 'Concept of Time in Distributed Systems',
   scalingTechniques: 'Scaling Techniques',
-  redundancyAndReplication: 'Redundancy and Replication'
+  redundancyAndReplication: 'Redundancy and Replication',
+  loadBalancers: 'Load Balancers'
 }
