@@ -12,5 +12,6 @@ export default {
   conceptOfTime: 'Concept of Time in Distributed Systems',
   scalingTechniques: 'Scaling Techniques',
   redundancyAndReplication: 'Redundancy and Replication',
-  loadBalancers: 'Load Balancers'
+  loadBalancers: 'Load Balancers',
+  caching: 'Caching'
 }

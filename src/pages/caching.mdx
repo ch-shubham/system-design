@@ -1,0 +1,105 @@
+# Caching
+
+## What is Caching?
+Ultimate aim of cashing is to improve the read performance.
+Let's see whether a real life example.
+![img](/assets/9.1.png)
+So in above, example, we see that Shubham goes in the morning and brings the sweet for the whole day and keep it with him so that he can save almost 1 hour of his day travel.
+
+**Caching:** Save important data(generally static data) in local memory to avoid unnecessary network calls, disk i/o, calculations, API calls, etc. So that our performance can be improved.
+![img](/assets/9.2.png)
+
+If the data does not frequently change, we keep the response data in local storage called caching, and this is called caching that helps to improve the performance.
+
+**Cache Miss:** Occurs when we don't find the data in the cache.
+
+## What are the places where caching can be used?
+![img](/assets/9.3.png)
+
+Many ORM providers (Software/Library which helps us to connect our application to database) have inbuilt caching implemented to improve the performance.
+So caching can be used at multiple places when the data does not change frequently. For example, in users browser, in frontend or in backend.
+
+Two kinds of Caching are there generally:
+- **Application Server Cache**
+- **CDN (Content Delivery Network)** - In frontend there are CSS, Javascript, images, videos, etc, that do not change frequently, so we can give/store these things to Cache provider that can cache the data and respond very quickly. So frontend fetches from CDN, instead of backend and CDN fetching is very light weight and fast compared to backend fetching. CDN is used for caching static content and then delivering it to the front-end application.
+![img](/assets/9.4.png)
+
+## Types of Caching Solutions
+Depending on how we implement cache and how we use it, there are two types: local cache/in-memory cache and distributed cache
+
+### Local Cache (In-Memory Cache)
+Store the data in RAM itself, and this type is always specific to one machine that cached the data in the RAM. 
+**Examples of In-Memory Cache:** For Java Library we have **Google Guava Cache**, **Memcached**.
+### Distributed Cache
+Used in distributed systems, distributed cache is stored in such that every machine can use it.
+**Examples of Distributed Cache**: External Caching - **Redis**
+![img](/assets/9.5.png)
+
+### Understanding performance impact with in-memory and Distributed Cache
+![img](/assets/9.6.png)
+Here we see that Shubham sends the request-1 to add the item to the cart and request-1 is directed to server-1 which has its local cache that stores the data. Now it sends the response to the user i.e Shubham but offline in the backend, it stores the data in the database. Now let's say Shubham again sends a new request to get the cart items, now if the request is redirected to server-2 instead of server-1 and since server-2 does not have the cache information of server-1, it would have no data related to the cart items from server-1 cache. So hence it would go to the database and fetch the items and then give the response to the user, so here, some slowness, or a bit of lag is experienced in terms of performance.
+
+![img](/assets/9.7.png)
+As opposite to in-memory caching, here, there is a common distributed cache that is shared across all the servers. So in the same scenario like above Shubham sends, the request-1 to add the items to the cart. It would be stored in the distributed cache first and let's say if there is another request from Shubham to get the cart items. It would not directly hit the database. Instead, it would look in the distributed cache if the information is available, and if the information is available, it would return from the distributed cache only. So here the performance is much better.
+
+Note: The above scenario is for distributed system as clearly visible from diagrams.
+
+**In case of distributed systems, distributed caching performs much better compared to in memory.**
+
+## When and when not to use to use Caching
+If the data is not changing frequently, in that case, we should use caching as it improves the performance.
+The data changes very frequently, there is no benefit of using caching as the data will go stale(become old and useless) very fast. And we will be providing the stale data which is not good practice.
+Deciding based on kind of application:
+- **Read intensive application** - Application where read operations >>> write operations. for example, Wikipedia, newspaper websites, blogging websites, etc. Caching makes much sense here. (Caching Helps)
+- **Write intensive application** - Application where write operations >>> read operations. for example, submit form websites like survey-monkey, Google forms, Google Drive, etc. Here caching is not recommended. (Don't do caching)
+
+## Different Caching Techniques
+
+### Write Through Cache Strategy: 
+The data gets written in parallel/simultaneously in cache and Databases.
+**Advantages:** No stale data, high consistency and consistent read.
+**Disadvantages:** Writing at two places simultaneously, so the write operations will be slower.
+For read intensive application, this is a good strategy, but for write intensive application, this strategy will be slow and hamper the performance.
+![img](/assets/9.8.png)
+### Write Around Caching Strategy:
+In this strategy, data is directly written to database, bypassing the cache, and when read occurs that time cache is updated.
+**Advantages:** Write operations are fast, so very good for right intensive applications.
+**Disadvantages:** Read becomes slower because of cache-miss.
+![img](/assets/9.9.png)
+### Write Back Cache Strategy:
+Data is first received by cache and cache itself gives the response and later on it is saved to database in async manner.
+**Advantages:** Write is very fast.
+**Disadvantages:** If it is in-memory cache, data loss can occur if cache fails.
+![img](/assets/9.10.png)
+
+## Cache Eviction Strategy
+We know that cache are very expensive (cost). So we have limited cache memory, so we can store only the limited data so we need to remove the all data so to decide we want some strategy strategy to evict or remove the old data from cash is called as cash eviction strategy so that new data can be added.
+
+### FIFO (First In First Out) Strategy
+- **Description**: Evicts the oldest item in the cache, i.e., the one that was added first. When new data entry to the cache comes in, the oldest data will be first removed to free up the space and then new data will be added. It is used when all data have almost equal priority.
+- **Use Case**: Suitable for maintaining temporal order, such as job scheduling or queue management.
+### LIFO (Last In First Out) Strategy
+- **Description**: Removes the most recently added item from the cache.  
+- **Use Case**: Suitable for stack-like data structures where newer items are less critical to retain.
+### LRU (Least Recently Used) Strategy
+- **Description**: Evicts the least recently accessed item from the cache.  
+- **Use Case**: Ideal for scenarios where older data is less likely to be reused (e.g., web browsers, memory management).
+### MRU (Most Recently Used) Strategy
+- **Description**: Removes the most recently accessed item from the cache.  
+- **Use Case**: Useful when older data is more likely to be reused than newer data.
+### RR (Random Replacement) Strategy
+- **Description**: Randomly selects an item to evict, regardless of usage or recency.  
+- **Use Case**: Simple and fast, often used in low-priority caches where no specific access pattern is predictable.
+
+
+## Solving real world problem
+**Question:** There is a newspaper firm(website). Initially the users were very less, but users got increased very quickly and the load time of the website also increased. So how can we improve the time of the website or how can we optimise it?
+
+**Solution:** 
+- Checking for any code related issues in every layer is the first step.
+- Check if it is read intensive or write intensive. Here it's visible that it is read intensive so we can use caching here wisely. 
+	 - First improvement: Use caching in backend so that data layer is not accessed very frequently. For example, hot news can be cached in the back end.
+	 - Second improvement: Use caching at front-end layer also so that multiple backend calls can be avoided.
+	 - 3rd improvement: User can do caching at local or browser level.
+- We can also think of using CDN as static content is there.
+
