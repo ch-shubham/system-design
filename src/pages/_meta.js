@@ -4,6 +4,9 @@ export default {
     title: 'About Me',
     type: 'page'
   },
+  '---': {
+    type: 'separator'
+  },
   // topics below
   introduction: 'Introduction',
   architecturePatterns: 'Architecture Patterns',
@@ -13,5 +16,8 @@ export default {
   scalingTechniques: 'Scaling Techniques',
   redundancyAndReplication: 'Redundancy and Replication',
   loadBalancers: 'Load Balancers',
-  caching: 'Caching'
+  caching: 'Caching',
+  '---': {
+    type: 'separator'
+  }
 }
